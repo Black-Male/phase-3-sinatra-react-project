@@ -29,20 +29,27 @@ class ApplicationController < Sinatra::Base
   get '/tasks' do
     Task.all.to_json
   end
-  patch 'tasks/:id' do
+  get '/tasks/:id' do
+    task= Task.find(params[:id])
+    task.to_json
+  end
+
+  patch '/tasks/:id' do
     task = Task.find(params[:id])
     task.update(
       done: params[:done]
     )
     task.to_json
   end
-  post '/Adduser' do
+
+  post '/users' do
     user = User.create(
-      name => params[:name]
+      name: params[:name]
     )
     user.to_json
+    # "hello world"
   end
-  post '/newtask' do
+  post '/tasks' do
     task = Task.create(
       task_details: params[:task_details],
       due_date: params[:due_date],
